@@ -1,0 +1,47 @@
+<div class="flex flex-col space-y-1.5" data-controller="post--reply">
+  <%= render BreadcrumbComponent.new items: @topic.breadcrumbs %>
+  <%= render "action_bar", pagy: @pagy %>
+
+  <div class="flex flex-row items-center justify-center space-x-2 bg-sky-200 border-2">
+    Views: <%= @topic.views %>
+    Replies: <%= @topic.posts.count %>
+  </div>
+
+  <% @posts.each_with_index do |post, index|%>
+    <div id="<%= post.id %>" class="flex flex-col space-y-1.5">
+      <div class="flex flex-row">
+        <%= render User::CardComponent.new(user: post.created_by) %>
+        <div class="border-l w-full bg-sky-100">
+          <div class="flex flex-row border-b items-center justify-between p-2 text-sm text-secondary-foreground">
+            <div><%= post.created_at.strftime("%B %d, %Y") %></div>
+            <div class="flex flex-row items-center space-x-2">
+              <div>Report</div>
+              <div>Quote</div>
+              <%= link_to "##{index + 1}", topic_path(anchor: post.id), class: "ml-2" %>
+            </div>
+          </div>
+
+          <div class="mt-2 p-2">
+            <%= post.content %>
+          </div>
+
+          <div>
+            <%= render User::SignatureComponent.new(user: post.created_by) %>
+            <%= post.created_by.signature %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if current_user && @post %>
+    <%= render_form_for @post, class: "hidden", data: { "post--reply-target": "form" } do |f| %>
+      <%= f.text_field :content, placeholder: "Reply to this topic", class: "form-input", data: { post__reply_target: "input" } %>
+      <%= f.hidden_field :topic_id, value: @topic.id %>
+
+      <%= f.submit "Reply", class: "btn btn-primary" %>
+    <% end %>
+  <% end %>
+
+  <%= render "action_bar", pagy: @pagy %>
+</div>

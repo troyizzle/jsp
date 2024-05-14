@@ -1,0 +1,8 @@
+<div class="flex flex-row items-center justify-between">
+  <%== pagy_nav(pagy) if pagy.pages > 1 %>
+  <div>
+    <%= render_button "Add Reply", data: { action: "post--reply#showForm" } %>
+    <%= link_to "New Trade", '#', class: "btn btn-primary" %>
+  </div>
+</div>
+

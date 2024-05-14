@@ -1,0 +1,41 @@
+<% if @forum.children.empty? %>
+  <%= render BreadcrumbComponent.new(items: @forum.build_breadcrumb) %>
+
+  <div class="border-2">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Topic Title</th>
+          <th>Author</th>
+          <th>Views</th>
+          <th>Last Reply</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @forum.topics.each do |topic| %>
+          <tr>
+            <td>4</td>
+            <td><%= link_to topic.title, topic %></td>
+            <td><%= topic.created_by.username %></td>
+            <td>55</td>
+            <td>Last Reply</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <%= render BreadcrumbComponent.new(items: [{ name: "Test", url: "#" }, { name: "Test 2", url: "#" }]) %>
+  <div class="flex flex-row flex-wrap">
+    <% @forum.children.each do |child| %>
+      <div class="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-2">
+        <div class="bg-white rounded-lg shadow-lg">
+          <div class="p-4">
+            <h2 class="text-lg font-semibold"><%= link_to child.title, forum_path(child) %></h2>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

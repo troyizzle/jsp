@@ -1,0 +1,5 @@
+<div class="flex flex-row space-x-3">
+  <%= link_to "General", settings_path, class: "#{'bg-blue-500' if active_tab == 'general'}" %>
+  <%= link_to "Password", settings_path(tab: "password"), class: "#{'bg-blue-500' if active_tab == 'password'}"  %>
+  <%= link_to "Avatar", settings_path(tab: "avatar"), class: "#{'bg-blue-500' if active_tab == 'avatar'}"  %>
+</div>

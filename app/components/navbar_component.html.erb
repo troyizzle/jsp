@@ -1,0 +1,43 @@
+<nav class="">
+  <div class="w-full flex flex-row items-center bg-primary justify-between p-1.5 border-black border-1">
+    <div class="fw-bold text-xl">Logo</div>
+    <div class="flex flex-row items-center justify-between space-x-2">
+      <div class="hidden md:block">
+        <% ['Rules', 'Help', 'Forum Gold FAQ', 'Photo Gallery', 'Hourly Raffle']. each do |link| %>
+          <%= link_to link, '#' %>
+        <% end %>
+      </div>
+      <div class="block md:hidden">
+        <% if user %>
+          <%= link_to user.username, user %>
+        <% else %>
+          <div class="flex flex-row space-x-2">
+            <%= link_to "Log In", new_user_session_path, class: "bg-secondary border-2 rounded p-1" %>
+            <%= link_to "Register", new_user_registration_path, class: "bg-secondary border-2 rounded p-1 font-bold" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="w-full h-full flex flex-row items-center p-2 bg-secondary">
+    <div class="flex w-full flex-row items-center space-x-2 justify-between">
+      <% if user %>
+        <%= link_to user.username, user %>
+        <%= link_to "Log Out", destroy_user_session_path, data: { turbo_method: :delete } %>
+        <%= link_to "Settings", settings_path %>
+        <div>messages</div>
+      <% else %>
+        <div>
+          <div class="hidden md:block">
+            <%= link_to "Log In", new_user_session_path %>
+            <%= link_to "Register", new_user_registration_path %>
+          </div>
+        </div>
+        <div class="flex flex-row items-center space-x-2">
+          <%= link_to "Account Recovery", "#" %>
+          <%= link_to "Resend Validation Email", "#" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</nav>
